@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Adorable Dog Promo</title>
+
+    <!-- Favicon -->
+    <link
+      rel="icon"
+      type="image/png"
+      href="./favicon-96x96.png"
+      sizes="96x96"
+    />
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="shortcut icon" href="./favicon.ico" />
+    <link
+      rel="apple-touch-icon"
+      sizes="180x180"
+      href="./apple-touch-icon.png"
+    />
+    <link rel="manifest" href="./site.webmanifest" />
+
+    <!-- OG Tags -->
+
+    <meta property="og:title" content="Adorable Dogs" />
+    <meta
+      property="og:description"
+      content="Showcasing the cuteness of dogs!"
+    />
+    <meta property="og:image" content="path-to-image.jpg" />
+
+    <!-- Web Font -->
+    <!-- <link href="https://fonts.googleapis.com/css?family=YourFontFamily" rel="stylesheet"> -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Dongle&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+    />
+  </head>
+  <body
+    style="
+      background-color: #f2aa4c;
+      color: #101820;
+      font-family: Arial, sans-serif;
+    "
+  >
+    <!-- Navigation Bar -->
+    <nav
+      class="navbar navbar-expand-lg navbar-dark"
+      style="background-color: #101820"
+    >
+      <a class="navbar-brand" href="#">Pawfect Dogs</a>
+      <button
+        class="navbar-toggler"
+        type="button"
+        data-toggle="collapse"
+        data-target="#navbarNav"
+        aria-controls="navbarNav"
+        aria-expanded="false"
+        aria-label="Toggle navigation"
+      >
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item">
+            <a class="nav-link" href="#about">About</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#gallery">Gallery</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="#contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header
+      class="container-fluid d-flex align-items-center justify-content-center"
+      style="height: 50vh; background-color: #101820; color: #f2aa4c"
+    >
+      <div class="text-center">
+        <h1 style="font-size: 2.5rem">Welcome to Pawfect Dogs</h1>
+        <p style="font-size: 1.2rem">
+          Celebrating the irresistible charm of our furry friends.
+        </p>
+      </div>
+    </header>
+
+    <!-- About Section -->
+    <section id="about" class="container text-center py-5">
+      <h2 style="font-size: 2rem">Why We Love Dogs</h2>
+      <p style="font-size: 1rem">
+        Dogs bring joy, loyalty, and unconditional love to our lives. Their
+        cuteness knows no bounds!
+      </p>
+    </section>
+
+    <!-- Gallery Section -->
+    <section id="gallery" class="container py-5">
+      <h2 class="text-center" style="font-size: 2rem">Gallery</h2>
+      <div class="row mt-4">
+        <!-- Replace src attributes with actual image paths -->
+        <div class="col-6 col-md-4 mb-3">
+          <div
+            style="
+              background-color: #101820;
+              padding: 10px;
+              border-radius: 10px;
+            "
+          >
+            <img
+              src="path-to-image1.jpg"
+              alt="Cute Dog 1"
+              class="img-fluid"
+              style="border-radius: 5px; cursor: pointer"
+              data-toggle="modal"
+              data-target="#imageModal1"
+            />
+          </div>
+        </div>
+        <div class="col-6 col-md-4 mb-3">
+          <div
+            style="
+              background-color: #101820;
+              padding: 10px;
+              border-radius: 10px;
+            "
+          >
+            <img
+              src="path-to-image2.jpg"
+              alt="Cute Dog 2"
+              class="img-fluid"
+              style="border-radius: 5px; cursor: pointer"
+              data-toggle="modal"
+              data-target="#imageModal2"
+            />
+          </div>
+        </div>
+        <div class="col-6 col-md-4 mb-3">
+          <div
+            style="
+              background-color: #101820;
+              padding: 10px;
+              border-radius: 10px;
+            "
+          >
+            <img
+              src="path-to-image3.jpg"
+              alt="Cute Dog 3"
+              class="img-fluid"
+              style="border-radius: 5px; cursor: pointer"
+              data-toggle="modal"
+              data-target="#imageModal3"
+            />
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Image Modals -->
+    <div
+      class="modal fade"
+      id="imageModal1"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="imageModalLabel1"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <img
+              src="path-to-image1.jpg"
+              alt="Cute Dog 1"
+              class="img-fluid"
+              style="border-radius: 5px"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="imageModal2"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="imageModalLabel2"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <img
+              src="path-to-image2.jpg"
+              alt="Cute Dog 2"
+              class="img-fluid"
+              style="border-radius: 5px"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="modal fade"
+      id="imageModal3"
+      tabindex="-1"
+      role="dialog"
+      aria-labelledby="imageModalLabel3"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-body">
+            <img
+              src="path-to-image3.jpg"
+              alt="Cute Dog 3"
+              class="img-fluid"
+              style="border-radius: 5px"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact" class="container text-center py-5">
+      <h2 style="font-size: 2rem">Get in Touch</h2>
+      <p style="font-size: 1rem">
+        Email us at
+        <a
+          href="mailto:contact@pawfectdogs.com"
+          style="color: #101820; text-decoration: underline"
+          >contact@pawfectdogs.com</a
+        >
+      </p>
+    </section>
+
+    <!-- Footer -->
+    <footer
+      class="text-center py-3"
+      style="background-color: #101820; color: #f2aa4c"
+    >
+      <p style="margin: 0">&copy; 2025 Pawfect Dogs. All Rights Reserved.</p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

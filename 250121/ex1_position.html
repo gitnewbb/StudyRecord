@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ex1</title>
+    <style>
+      div {
+        width: 100px;
+        height: 100px;
+        background-color: rgba(255, 228, 196, 0.918);
+        border: 10px solid darkkhaki;
+        margin: 50px;
+      }
+      #static {
+        position: static;
+        top: 10px;
+      }
+      #relative {
+        position: relative;
+        top: -10px;
+      }
+      .relative {
+        position: relative;
+      }
+      .static {
+        position: static;
+      }
+      .absolute {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        background-color: darkcyan;
+        border-color: darkorchid;
+      }
+      .fixed {
+        position: fixed;
+        top: 30px;
+        left: 30px;
+        background-color: rgb(16, 66, 16);
+        border-color: rgb(65, 96, 104);
+      }
+      .sticky {
+        position: sticky;
+        top: 20px;
+        background-color: rgb(106, 236, 106);
+        border-color: rgb(142, 219, 238);
+        z-index: 9999;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="sticky">sticky2</div>
+    <div id="static" style="position: static">
+      static
+      <div class="absolute">abs</div>
+    </div>
+    <div id="relative" style="position: relative">relative</div>
+    <div class="relative">
+      <div>static</div>
+      <div class="relative">relative</div>
+      <div class="absolute">abs</div>
+      <div class="fixed">fixed</div>
+      <div class="sticky">sticky1</div>
+    </div>
+  </body>
+</html>

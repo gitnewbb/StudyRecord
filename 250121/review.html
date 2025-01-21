@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>2025년 1월 21일 복습</title>
+    <style>
+      p {
+        color: navy;
+      }
+      .p1 {
+        color: #008000;
+        /* hex코드 / 16진법 : R, G, B. 각각의 색상의 강도를 16진법의 숫자로 나타내서 색상을 표현 */
+      }
+      #p2 {
+        color: crimson;
+        background-color: pink;
+      }
+      .box {
+        width: 100px;
+        height: 100px;
+        padding: 10px;
+        /* 상 우 좌 하 */
+        margin: 20px 20px 10px 10px;
+        border: 2px solid #86a788;
+      }
+      #box-sizing {
+        box-sizing: border-box;
+      }
+      #content-sizing {
+        box-sizing: content-box;
+      }
+      .float {
+        float: left;
+      }
+    </style>
+  </head>
+  <body>
+    <p style="color: brown">be a best</p>
+    <div>
+      <p>p tag</p>
+      <p class="p1">p tag and class</p>
+      <p id="p2">p tag and id</p>
+    </div>
+    <!-- div>div.box#box-sizing+div.box#content-sizing -->
+    <div>
+      <div class="box" id="box-sizing"></div>
+      <div class="box" id="content-sizing"></div>
+    </div>
+    <div>
+      <div class="box float" id="box-sizing"></div>
+      <div class="box float" id="content-sizing"></div>
+    </div>
+    <!-- lorem*n make meaningless worlds -->
+    Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ducimus
+    praesentium eveniet quidem? Iusto vel libero, autem excepturi commodi
+    reprehenderit. Fugit natus sequi repellat ullam cum quasi rem dolorum
+    laboriosam perferendis? Nostrum, molestias quam vel voluptas commodi, qui
+    quisquam velit placeat blanditiis quos enim ullam ipsum totam animi dolor
+    aspernatur dignissimos necessitatibus dolore natus impedit doloremque
+    excepturi a possimus! Placeat, at. Sunt voluptatum ab sed alias consequatur
+    fuga, perferendis est dolore repudiandae fugit provident sequi facilis earum
+    voluptatem saepe, natus, illo necessitatibus numquam odit optio delectus
+    amet. Fugit commodi minima explicabo! Praesentium quam optio eveniet quia,
+    atque commodi dolorum blanditiis assumenda dolor accusamus animi illo nihil
+    culpa nesciunt voluptatum nostrum rem rerum, labore, aliquid tempore
+    accusantium nisi. Soluta reprehenderit tenetur ad. Modi quo reprehenderit
+    quaerat maxime ea corporis veritatis at itaque ex! Laboriosam iste laborum
+    earum ratione eius alias, eos molestias aspernatur a et nam ipsam deleniti
+    praesentium labore? Architecto, rem!
+    <div class="box float" id="box-sizing"></div>
+    <div style="clear: both" class="box" id="box-sizing"></div>
+  </body>
+</html>
