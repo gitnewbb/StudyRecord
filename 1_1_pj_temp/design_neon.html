@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>여행 플랫폼</title>
+    <style>
+      /* 다크 + 네온 테마 색상 정의 */
+      :root {
+        --primary-100: #0f0f0f; /* 메인 배경 (더 어둡게) */
+        --primary-200: #1f1f1f; /* 카드 배경 */
+        --highlight-100: #8f00ff; /* 네온 퍼플 포인트 */
+        --text-light: #e0e0e0; /* 밝은 텍스트 */
+        --text-muted: #a0a0a0; /* 흐린 텍스트 */
+        --shadow-color: rgba(0, 0, 0, 0.7); /* 그림자 */
+        --border-color: rgba(255, 255, 255, 0.05); /* 아주 흐린 경계선 */
+      }
+
+      /* 전역 스타일 */
+      body {
+        margin: 0;
+        padding: 0;
+        font-family: "Poppins", sans-serif;
+        background-color: var(--primary-100);
+        color: var(--text-light);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      header {
+        background-color: var(--primary-200);
+        color: var(--text-light);
+        text-align: center;
+        padding: 2rem;
+        width: 100%;
+        font-size: 2.5rem;
+        font-weight: bold;
+        position: relative;
+        overflow: hidden;
+        /* 심플한 네온 글로우 효과 */
+        text-shadow: 0 0 6px var(--highlight-100);
+      }
+
+      /* 헤더 아래에 살짝 얇은 네온 라인 */
+      header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 2px;
+        background: linear-gradient(
+          to right,
+          transparent,
+          var(--highlight-100),
+          transparent
+        );
+      }
+
+      /* 사용자 정보 섹션 */
+      .travel-info {
+        display: flex;
+        justify-content: space-around;
+        align-items: center;
+        width: 80%;
+        margin-top: 2rem;
+        padding: 1.5rem;
+        border-radius: 12px;
+        background: var(--primary-200);
+        box-shadow: 0 4px 15px var(--shadow-color);
+        border: 1px solid var(--border-color);
+      }
+
+      .info-item {
+        text-align: center;
+        flex: 1;
+      }
+
+      .info-item + .info-item {
+        border-left: 1px solid var(--border-color);
+        padding-left: 1rem;
+      }
+
+      .info-icon {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+        color: var(--highlight-100);
+        /* 살짝 네온 발광 */
+        text-shadow: 0 0 4px var(--highlight-100);
+      }
+
+      .info-title {
+        font-size: 0.95rem;
+        font-weight: bold;
+        margin: 0;
+        color: var(--text-light);
+      }
+
+      .info-data {
+        font-size: 1.1rem;
+        margin: 0.5rem 0 0;
+        color: var(--text-muted);
+      }
+
+      /* 상단 여행 기록 아이콘 섹션 */
+      .travel-icons {
+        display: flex;
+        justify-content: space-around;
+        width: 80%;
+        margin-top: 3rem;
+        gap: 1rem; /* 카드 간격을 조금 여유 있게 */
+      }
+
+      .travel-card {
+        background: var(--primary-200);
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 15px var(--shadow-color);
+        text-align: center;
+        flex: 1;
+        transition: transform 0.3s, box-shadow 0.3s;
+        border: 1px solid var(--border-color);
+      }
+
+      .travel-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.7);
+      }
+
+      .travel-card .icon {
+        font-size: 2rem;
+        margin-bottom: 1rem;
+        color: var(--highlight-100);
+        text-shadow: 0 0 4px var(--highlight-100);
+      }
+
+      .travel-card h3 {
+        font-size: 1rem;
+        margin: 0;
+        color: var(--text-light);
+        text-transform: uppercase; /* 좀 더 미래적인 느낌 */
+      }
+
+      .travel-card p {
+        font-size: 0.9rem;
+        margin: 0.5rem 0 0;
+        color: var(--text-muted);
+        font-weight: bold;
+      }
+
+      /* 추천 섹션 */
+      .recommend-container {
+        margin-top: 4rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 80%;
+        gap: 1rem;
+      }
+
+      .recommend-section {
+        width: 100%;
+        background: var(--primary-200);
+        border-radius: 12px;
+        box-shadow: 0 4px 15px var(--shadow-color);
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 1rem 2rem;
+        border: 1px solid var(--border-color);
+        transition: transform 0.3s, box-shadow 0.3s;
+      }
+
+      .recommend-section:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 6px 25px rgba(0, 0, 0, 0.7);
+      }
+
+      .recommend-section img {
+        width: 50px;
+        height: 50px;
+      }
+
+      .recommend-content {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+      }
+
+      .recommend-title {
+        font-weight: bold;
+        font-size: 1rem;
+        color: var(--text-light);
+      }
+
+      .recommend-link {
+        color: var(--highlight-100);
+        text-decoration: none;
+        font-size: 0.9rem;
+        transition: color 0.3s;
+      }
+
+      .recommend-link:hover {
+        color: var(--text-light);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 헤더 -->
+    <header>여행 플랫폼</header>
+
+    <!-- 사용자 정보 섹션 -->
+    <div class="travel-info">
+      <div class="info-item">
+        <div class="info-icon">👤</div>
+        <h3 class="info-title">사용자</h3>
+        <p class="info-data">김철수</p>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">📍</div>
+        <h3 class="info-title">최근 여행지</h3>
+        <p class="info-data">도쿄, 일본</p>
+      </div>
+      <div class="info-item">
+        <div class="info-icon">✈️</div>
+        <h3 class="info-title">가고 싶은 여행지</h3>
+        <p class="info-data">파리, 프랑스</p>
+      </div>
+    </div>
+
+    <!-- 상단 여행 기록 -->
+    <div class="travel-icons">
+      <div class="travel-card">
+        <div class="icon">🎥</div>
+        <h3>브이로그</h3>
+        <p>여행을 기록하세요.</p>
+      </div>
+      <div class="travel-card">
+        <div class="icon">🗓️</div>
+        <h3>여행 일정</h3>
+        <p>효율적인 플랜 만들기.</p>
+      </div>
+      <div class="travel-card">
+        <div class="icon">💡</div>
+        <h3>여행 팁</h3>
+        <p>유용한 정보를 얻으세요.</p>
+      </div>
+    </div>
+
+    <!-- 추천 섹션 -->
+    <div class="recommend-container">
+      <div class="recommend-section">
+        <img src="icons/recommend_icon.png" alt="추천 아이콘" />
+        <div class="recommend-content">
+          <div class="recommend-title">추천 여행지 링크</div>
+          <a
+            href="https://example.com/travel-destination"
+            class="recommend-link"
+            >example.com/travel-destination</a
+          >
+        </div>
+      </div>
+
+      <div class="recommend-section">
+        <img src="icons/youtube_icon.png" alt="유튜브 아이콘" />
+        <div class="recommend-content">
+          <div class="recommend-title">추천 유튜브 링크</div>
+          <a href="https://youtube.com/example" class="recommend-link"
+            >youtube.com/example</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

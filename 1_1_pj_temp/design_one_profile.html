@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>통합 예시 - 여행 플랫폼</title>
+
+    <style>
+      /* -----------------------------
+         1) 전체 공통 스타일 & 컬러
+      ----------------------------- */
+      :root {
+        --bg-color: #fbf8f4; /* 전체 배경 (밝고 따뜻) */
+        --card-color: #ffffff; /* 카드 배경 */
+        --header-color: #f3e8df; /* 헤더 배경 */
+        --highlight-color: #b77d61; /* 포인트 컬러 (따뜻한 브라운) */
+        --text-main: #3e3e3e; /* 본문 텍스트 */
+        --text-muted: #757575; /* 흐린 텍스트 */
+        --border-color: #e5e0dd; /* 연한 베이지/그레이 */
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--bg-color);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        color: var(--text-main);
+      }
+
+      /* -----------------------------
+         2) 헤더
+      ----------------------------- */
+      header {
+        background-color: var(--header-color);
+        width: 100%;
+        text-align: center;
+        padding: 2rem 1rem;
+        font-size: 2rem;
+        font-weight: bold;
+        color: var(--text-main);
+        position: relative;
+      }
+
+      header::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 10%;
+        width: 80%;
+        height: 2px;
+        background-color: var(--highlight-color);
+      }
+
+      /* -----------------------------
+         3) 프로필 카드 형태
+      ----------------------------- */
+      .profile-card {
+        width: 320px;
+        margin-top: 2rem;
+        background: var(--card-color);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .profile-img {
+        width: 100px;
+        height: 100px;
+        object-fit: cover;
+        border-radius: 50%;
+      }
+
+      .profile-name {
+        margin: 1rem 0 0.5rem;
+        font-weight: bold;
+        font-size: 1.2rem;
+        color: var(--text-main);
+      }
+
+      .profile-dest,
+      .profile-wish {
+        margin: 0.3rem 0;
+        color: var(--text-muted);
+        font-size: 0.95rem;
+      }
+
+      /* -----------------------------
+         4) 탭 컨테이너 - 브이로그/일정/팁
+      ----------------------------- */
+      .tab-container {
+        width: 80%;
+        max-width: 600px;
+        margin-top: 2rem;
+        background: var(--card-color);
+        border-radius: 8px;
+        border: 1px solid var(--border-color);
+      }
+
+      .tab-buttons {
+        display: flex;
+        border-bottom: 1px solid var(--border-color);
+      }
+
+      .tab-btn {
+        flex: 1;
+        padding: 1rem;
+        background: none;
+        border: none;
+        font-weight: bold;
+        cursor: pointer;
+        color: var(--text-main);
+        transition: background 0.2s;
+      }
+
+      .tab-btn:hover {
+        background: #f9f9f9;
+      }
+
+      /* 선택된 탭 표시 */
+      .tab-btn.active {
+        background: var(--card-color);
+        border-bottom: 2px solid var(--highlight-color);
+      }
+
+      .tab-contents {
+        padding: 1rem;
+      }
+
+      .tab-content {
+        display: none;
+      }
+
+      .tab-content.active {
+        display: block;
+        animation: fadeIn 0.3s ease;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+        }
+        to {
+          opacity: 1;
+        }
+      }
+
+      /* -----------------------------
+         5) 추천 섹션을 카드 그리드로
+      ----------------------------- */
+      .recommend-grid {
+        width: 80%;
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+        gap: 1rem;
+        margin-top: 2rem;
+      }
+
+      .recommend-card {
+        background: var(--card-color);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .recommend-card img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+      }
+
+      .recommend-text h4 {
+        margin: 0;
+        font-size: 1rem;
+        color: var(--text-main);
+      }
+
+      .recommend-text a {
+        text-decoration: none;
+        color: var(--highlight-color);
+        font-size: 0.9rem;
+      }
+
+      .recommend-text a:hover {
+        text-decoration: underline;
+      }
+
+      /* -----------------------------
+         6) 프로모션 슬라이더
+      ----------------------------- */
+      .promo-slider {
+        width: 80%;
+        margin: 3rem auto 2rem;
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+        border: 1px solid var(--border-color);
+      }
+
+      .slide {
+        width: 100%;
+        height: 300px;
+        position: absolute; /* 겹쳐서 배치 후 JS로 show/hide */
+        top: 0;
+        left: 0;
+        opacity: 0;
+        transition: opacity 0.5s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .slide.active {
+        opacity: 1;
+        position: relative;
+      }
+
+      .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .slide-text {
+        position: absolute;
+        bottom: 2rem;
+        left: 2rem;
+        color: #fff;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.6);
+      }
+
+      .slide-text h3 {
+        margin-bottom: 0.5rem;
+        font-size: 1.4rem;
+      }
+
+      .slide-text p {
+        font-size: 1rem;
+      }
+
+      /* 슬라이더 컨트롤 버튼 */
+      .slider-controls {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+      }
+
+      .slider-btn {
+        background: rgba(0, 0, 0, 0.4);
+        color: #fff;
+        border: none;
+        padding: 0.6rem 1rem;
+        cursor: pointer;
+        font-weight: bold;
+        transition: background 0.3s;
+      }
+
+      .slider-btn:hover {
+        background: rgba(0, 0, 0, 0.6);
+      }
+    </style>
+  </head>
+
+  <body>
+    <!-- 헤더 -->
+    <header>여행 플랫폼</header>
+
+    <!-- (1) 프로필 카드 -->
+    <div class="profile-card">
+      <img
+        src="https://static-00.iconduck.com/assets.00/profile-icon-512x512-w0uaq4yr.png"
+        alt="프로필 이미지"
+        class="profile-img"
+      />
+      <h2 class="profile-name">김철수</h2>
+      <p class="profile-dest">최근 여행지: 도쿄, 일본</p>
+      <p class="profile-wish">가고 싶은 여행지: 파리, 프랑스</p>
+    </div>
+
+    <!-- (2) 탭 컨테이너: 브이로그/일정/팁 -->
+    <div class="tab-container">
+      <div class="tab-buttons">
+        <button class="tab-btn active" data-tab="vlog">브이로그</button>
+        <button class="tab-btn" data-tab="schedule">여행 일정</button>
+        <button class="tab-btn" data-tab="tips">여행 팁</button>
+      </div>
+      <div class="tab-contents">
+        <div class="tab-content active" id="vlog">
+          <h3>브이로그</h3>
+          <p>여행을 영상으로 기록하고 공유하세요!</p>
+        </div>
+        <div class="tab-content" id="schedule">
+          <h3>여행 일정</h3>
+          <p>효율적인 플랜을 만들어 보세요.</p>
+        </div>
+        <div class="tab-content" id="tips">
+          <h3>여행 팁</h3>
+          <p>유용한 정보들을 모아 보세요.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- (3) 추천 섹션: 카드 그리드 -->
+    <div class="recommend-grid">
+      <div class="recommend-card">
+        <img
+          src="https://static-00.iconduck.com/assets.00/map-icon-512x462-4h1cn3f6.png"
+          alt="추천 아이콘"
+        />
+        <div class="recommend-text">
+          <h4>추천 여행지 링크</h4>
+          <a href="https://example.com/travel-destination">
+            example.com/travel-destination
+          </a>
+        </div>
+      </div>
+      <div class="recommend-card">
+        <img
+          src="https://static-00.iconduck.com/assets.00/youtube-icon-512x512-ptim18e9.png"
+          alt="유튜브 아이콘"
+        />
+        <div class="recommend-text">
+          <h4>추천 유튜브 링크</h4>
+          <a href="https://youtube.com/example">youtube.com/example</a>
+        </div>
+      </div>
+      <!-- 필요하다면 여기서 더 카드를 추가 -->
+    </div>
+
+    <!-- (4) 프로모션 슬라이더 예시 -->
+    <div class="promo-slider">
+      <!-- 슬라이드 1 -->
+      <div class="slide active">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSsbAeqb-VGEBGzPZmsmoFsqLu1YvajzD_07w&s"
+          alt="프로모션 1"
+        />
+        <div class="slide-text">
+          <h3>특가 항공권 - 하와이</h3>
+          <p>지금 예약하면 최대 30% 할인!</p>
+        </div>
+      </div>
+      <!-- 슬라이드 2 -->
+      <div class="slide">
+        <img
+          src="https://static-00.iconduck.com/assets.00/switzerland-icon-2048x1536-zghwgumo.png"
+          alt="프로모션 2"
+        />
+        <div class="slide-text">
+          <h3>인기 숙소 - 스위스</h3>
+          <p>아름다운 알프스를 즐겨보세요.</p>
+        </div>
+      </div>
+      <!-- 슬라이드 3 -->
+      <div class="slide">
+        <img
+          src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSPMJ8l31nFXEOQ0c6nNzCpCQlRaDfRgaZ0sw&s"
+          alt="프로모션 3"
+        />
+        <div class="slide-text">
+          <h3>이색 체험 - 아이슬란드</h3>
+          <p>오로라와 함께하는 특별한 추억.</p>
+        </div>
+      </div>
+
+      <!-- 좌우 컨트롤 버튼 -->
+      <div class="slider-controls">
+        <button class="slider-btn" id="prev-btn">&#10094;</button>
+        <button class="slider-btn" id="next-btn">&#10095;</button>
+      </div>
+    </div>
+
+    <!-- JS 스크립트 (탭 & 슬라이더 예시) -->
+    <script>
+      // -----------------------------
+      // 탭 스위치 기능
+      // -----------------------------
+      const tabs = document.querySelectorAll(".tab-btn");
+      const contents = document.querySelectorAll(".tab-content");
+
+      tabs.forEach((tab) => {
+        tab.addEventListener("click", () => {
+          // 모든 버튼, 콘텐츠에서 active 제거
+          tabs.forEach((t) => t.classList.remove("active"));
+          contents.forEach((c) => c.classList.remove("active"));
+
+          // 현재 버튼에 active 추가
+          tab.classList.add("active");
+          // data-tab 속성값으로 해당 콘텐츠 찾기
+          const target = tab.dataset.tab;
+          document.getElementById(target).classList.add("active");
+        });
+      });
+
+      // -----------------------------
+      // 간단 슬라이더 기능
+      // -----------------------------
+      const slides = document.querySelectorAll(".slide");
+      const prevBtn = document.getElementById("prev-btn");
+      const nextBtn = document.getElementById("next-btn");
+      let currentIndex = 0;
+
+      // 보여줄 슬라이드 업데이트
+      function showSlide(index) {
+        slides.forEach((slide, i) => {
+          slide.classList.remove("active");
+          if (i === index) {
+            slide.classList.add("active");
+          }
+        });
+      }
+
+      // 이전/다음 버튼 핸들러
+      prevBtn.addEventListener("click", () => {
+        currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+        showSlide(currentIndex);
+      });
+      nextBtn.addEventListener("click", () => {
+        currentIndex = (currentIndex + 1) % slides.length;
+        showSlide(currentIndex);
+      });
+
+      // 일정 간격 자동 슬라이드 (원한다면)
+      // setInterval(() => {
+      //   nextBtn.click();
+      // }, 5000); // 5초마다 자동
+    </script>
+  </body>
+</html>

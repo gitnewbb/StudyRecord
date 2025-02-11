@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>여행 플랫폼</title>
+    <style>
+      /* 기본 컬러 및 스타일 */
+      :root {
+        --bg-color: #fbf8f4; /* 전체 배경 */
+        --header-bg: #f3e8df; /* 추천 맨트 배경 */
+        --card-bg: #ffffff; /* 카드 배경 */
+        --accent-color: #b77d61; /* 포인트 컬러 */
+        --text-main: #3e3e3e; /* 주요 텍스트 색상 */
+        --text-muted: #757575; /* 보조 텍스트 색상 */
+        --border-color: #e5e0dd; /* 테두리 색상 */
+      }
+
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: var(--bg-color);
+        color: var(--text-main);
+        padding: 1rem;
+      }
+      /* 최상단 추천 맨트 */
+      .top-message {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+        padding: 1rem;
+        background-color: var(--header-bg);
+        border-radius: 8px;
+      }
+      /* 메인 영역: 왼쪽 프로필, 오른쪽 Vlog/Schedule (상하 분할) */
+      .main-section {
+        display: flex;
+        gap: 1rem;
+        margin-bottom: 1.5rem;
+      }
+      /* 프로필 섹션: 가로 너비를 두 배로 늘리고, 세로 높이를 2/3로 조정 */
+      .profile-section {
+        flex: 1;
+        max-width: 300px; /* 기존 150px의 두 배 */
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        text-align: center;
+        min-height: 300px; /* 기존 450px의 2/3 */
+      }
+      .profile-section img {
+        width: 120px;
+        height: 120px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-bottom: 0.5rem;
+      }
+      .profile-section h3 {
+        font-size: 1.3rem;
+        margin-bottom: 0.3rem;
+      }
+      /* 우측 콘텐츠 영역: Vlog와 Schedule을 상하로 배치 */
+      .content-section {
+        flex: 2;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        /* 가로 크기는 프로필에 맞춰 자동 배분 */
+      }
+      .vlog-section,
+      .schedule-section {
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 1rem;
+        height: 133px; /* 기존 200px의 2/3 (약 133px) */
+      }
+      .vlog-section h3,
+      .schedule-section h3 {
+        font-size: 1.2rem;
+        margin-bottom: 0.5rem;
+      }
+      /* 오늘의 여행팁 섹션: 컨테이너 높이 늘리고, 제목을 우상단에 배치 */
+      .travel-tip {
+        position: relative;
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        padding: 2rem;
+        margin-bottom: 1.5rem;
+        min-height: 250px; /* 세로 크기 확대 */
+      }
+      /* 여행팁 제목을 좌상단에 위치 */
+      .tip-title {
+        position: static;
+        top: 10px;
+        right: 10px;
+        font-size: 1.5rem;
+        font-weight: bold;
+      }
+      .tip-content {
+        margin-top: 2.5rem; /* 제목과 내용 사이 여백 확보 */
+      }
+      .tip-content p {
+        color: var(--text-muted);
+        font-size: 1rem;
+      }
+      .tip-more {
+        position: absolute;
+        top: 50%;
+        right: 10px;
+        transform: translateY(-50%);
+      }
+      .tip-more button {
+        background-color: var(--accent-color);
+        color: #fff;
+        border: none;
+        padding: 0.5rem 1rem;
+        border-radius: 4px;
+        cursor: pointer;
+      }
+      /* 슬라이더 섹션 (추천 여행지, 추천 유튜브 링크): 세로 높이를 2/3로 줄임 */
+      .slider-container {
+        margin-bottom: 1.5rem;
+        background-color: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        overflow: hidden;
+        position: relative;
+        padding: 1rem;
+      }
+      .slider-container h3 {
+        margin-bottom: 0.5rem;
+        font-size: 1.2rem;
+      }
+      .slider {
+        position: relative;
+        width: 100%;
+        height: 67px; /* 기존 100px의 2/3 */
+      }
+      .slide {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+        transition: opacity 0.5s ease;
+      }
+      .slide.active {
+        opacity: 1;
+        position: relative;
+      }
+      .slide img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        border-radius: 4px;
+      }
+      .slider-controls {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+        pointer-events: none;
+      }
+      .slider-btn {
+        background: rgba(0, 0, 0, 0.4);
+        color: #fff;
+        border: none;
+        padding: 0.5rem 0.8rem;
+        cursor: pointer;
+        pointer-events: all;
+        border-radius: 4px;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- 최상단 추천 맨트 -->
+    <div class="top-message">다음 여행은 프랑스 파리 어떠신가요</div>
+
+    <!-- 메인 영역: 프로필 (왼쪽) & Vlog/Schedule (오른쪽, 상하 분할) -->
+    <div class="main-section">
+      <!-- 프로필 섹션 -->
+      <div class="profile-section">
+        <img src="https://via.placeholder.com/120" alt="프로필 이미지" />
+        <h3>김철수</h3>
+        <p>여행 매니아</p>
+      </div>
+      <!-- Vlog와 Schedule을 상하로 배치 -->
+      <div class="content-section">
+        <div class="vlog-section">
+          <h3>Vlog</h3>
+          <p>여행 브이로그 콘텐츠가 여기에 표시됩니다.</p>
+        </div>
+        <div class="schedule-section">
+          <h3>Schedule</h3>
+          <p>여행 일정 콘텐츠가 여기에 표시됩니다.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 오늘의 여행팁 섹션 -->
+    <div class="travel-tip">
+      <h3 class="tip-title">오늘의 여행팁</h3>
+      <div class="tip-content">
+        <p>여행은 즐겁다. 당장 출발하자</p>
+      </div>
+      <div class="tip-more">
+        <button>더보기</button>
+      </div>
+    </div>
+
+    <!-- 추천 여행지 슬라이더 -->
+    <div class="slider-container" id="travel-slider-container">
+      <h3>추천 여행지</h3>
+      <div class="slider" id="travel-slider">
+        <div class="slide active">
+          <img
+            src="https://via.placeholder.com/300x67?text=Travel+1"
+            alt="Travel 1"
+          />
+        </div>
+        <div class="slide">
+          <img
+            src="https://via.placeholder.com/300x67?text=Travel+2"
+            alt="Travel 2"
+          />
+        </div>
+        <div class="slide">
+          <img
+            src="https://via.placeholder.com/300x67?text=Travel+3"
+            alt="Travel 3"
+          />
+        </div>
+      </div>
+      <div class="slider-controls">
+        <button class="slider-btn" id="prev-travel">&#10094;</button>
+        <button class="slider-btn" id="next-travel">&#10095;</button>
+      </div>
+    </div>
+
+    <!-- 추천 유튜브 링크 슬라이더 -->
+    <div class="slider-container" id="youtube-slider-container">
+      <h3>추천 유튜브 링크</h3>
+      <div class="slider" id="youtube-slider">
+        <div class="slide active">
+          <img
+            src="https://via.placeholder.com/300x67?text=YouTube+1"
+            alt="YouTube 1"
+          />
+        </div>
+        <div class="slide">
+          <img
+            src="https://via.placeholder.com/300x67?text=YouTube+2"
+            alt="YouTube 2"
+          />
+        </div>
+        <div class="slide">
+          <img
+            src="https://via.placeholder.com/300x67?text=YouTube+3"
+            alt="YouTube 3"
+          />
+        </div>
+      </div>
+      <div class="slider-controls">
+        <button class="slider-btn" id="prev-youtube">&#10094;</button>
+        <button class="slider-btn" id="next-youtube">&#10095;</button>
+      </div>
+    </div>
+
+    <script>
+      // 슬라이더 기능 함수 (각 슬라이더에 대해 호출)
+      function sliderSetup(sliderId, prevBtnId, nextBtnId) {
+        const slider = document.getElementById(sliderId);
+        const slides = slider.querySelectorAll(".slide");
+        let currentIndex = 0;
+        function showSlide(index) {
+          slides.forEach((slide, i) => {
+            slide.classList.remove("active");
+            if (i === index) slide.classList.add("active");
+          });
+        }
+        document
+          .getElementById(prevBtnId)
+          .addEventListener("click", function () {
+            currentIndex = (currentIndex - 1 + slides.length) % slides.length;
+            showSlide(currentIndex);
+          });
+        document
+          .getElementById(nextBtnId)
+          .addEventListener("click", function () {
+            currentIndex = (currentIndex + 1) % slides.length;
+            showSlide(currentIndex);
+          });
+      }
+      // 여행지 슬라이더 초기화
+      sliderSetup("travel-slider", "prev-travel", "next-travel");
+      // 유튜브 슬라이더 초기화
+      sliderSetup("youtube-slider", "prev-youtube", "next-youtube");
+    </script>
+  </body>
+</html>
