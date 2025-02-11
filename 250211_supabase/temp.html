@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Supabase</title>
+  </head>
+  <body>
+    <section>
+      <form id="text-form">
+        <input type="text" name="content" placeholder="내용 입력" required />
+        <button type="submit">텍스트 등록</button>
+      </form>
+    </section>
+    <section>
+      <form id="file-form">
+        <input type="file" name="file" accept="image/*" required />
+        <button type="submit">파일 등록</button>
+      </form>
+    </section>
+    <section>
+      <h3>데이터 목록</h3>
+      <ul id="container"></ul>
+    </section>
+  </body>
+  <script>
+    const supabaseUrl = "https://zhweceexagwizqhrlqvy.supabase.co";
+    const supabaseAnonKey =
+      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inpod2VjZWV4YWd3aXpxaHJscXZ5Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzkyMzY1MzEsImV4cCI6MjA1NDgxMjUzMX0.loxcxx_IFeLbXJWRuXy4-FRMakS0J6ZLYTSe8Ofx8kU";
+
+    const tableName = "MY_TABLE";
+    const storageBucket = "uploads";
+    const textForm = document.querySelector("#text-form");
+    const fileForm = document.querySelector("#file-form");
+    const container = document.querySelector("#container");
+
+    // 📌 데이터 가져오기 (GET 요청)
+    async function fetchData() {
+      const response = await fetch(`${supabaseUrl}/rest/v1/${tableName}`, {
+        method: "GET",
+        headers: {
+          apikey: supabaseAnonKey,
+          Authorization: `Bearer ${supabaseAnonKey}`,
+          "Content-Type": "application/json",
+        },
+      });
+
+      const data = await response.json();
+      console.log("불러온 데이터:", data);
+
+      // 🔥 데이터 목록을 UI에 표시
+      container.innerHTML = "";
+      data.forEach((item) => {
+        const li = document.createElement("li");
+        li.textContent = item.content || "(파일만 등록됨)";
+        if (item.file_url) {
+          const img = document.createElement("img");
+          img.src = item.file_url;
+          img.style.maxWidth = "200px";
+          li.appendChild(img);
+        }
+        container.appendChild(li);
+      });
+    }
+
+    // 📌 텍스트 데이터 추가 (POST 요청)
+    textForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(textForm);
+      const content = formData.get("content");
+
+      const response = await fetch(`${supabaseUrl}/rest/v1/${tableName}`, {
+        method: "POST",
+        headers: {
+          apikey: supabaseAnonKey,
+          Authorization: `Bearer ${supabaseAnonKey}`,
+          "Content-Type": "application/json",
+          Prefer: "return=representation",
+        },
+        body: JSON.stringify({ content }),
+      });
+
+      if (response.ok) {
+        textForm.reset();
+        fetchData();
+      } else {
+        alert("텍스트 추가 실패");
+      }
+    });
+
+    // 📌 파일 업로드 기능
+    fileForm.addEventListener("submit", async (event) => {
+      event.preventDefault();
+      const formData = new FormData(fileForm);
+      const file = formData.get("file");
+      let fileUrl = null;
+
+      if (file && file.size > 0) {
+        const fileExt = file.name.split(".").pop();
+        const fileName = `${Date.now()}.${fileExt}`;
+        const filePath = `${fileName}`;
+
+        const { data, error } = await fetch(
+          `${supabaseUrl}/storage/v1/object/${storageBucket}/${filePath}`,
+          {
+            method: "POST",
+            headers: {
+              apikey: supabaseAnonKey,
+              Authorization: `Bearer ${supabaseAnonKey}`,
+              "Content-Type": file.type,
+            },
+            body: file,
+          }
+        );
+
+        if (!error) {
+          fileUrl = `${supabaseUrl}/storage/v1/object/public/${storageBucket}/${filePath}`;
+        }
+      }
+
+      if (fileUrl) {
+        const response = await fetch(`${supabaseUrl}/rest/v1/${tableName}`, {
+          method: "POST",
+          headers: {
+            apikey: supabaseAnonKey,
+            Authorization: `Bearer ${supabaseAnonKey}`,
+            "Content-Type": "application/json",
+            Prefer: "return=representation",
+          },
+          body: JSON.stringify({ file_url: fileUrl }),
+        });
+
+        if (response.ok) {
+          fileForm.reset();
+          fetchData();
+        } else {
+          alert("파일 추가 실패");
+        }
+      }
+    });
+
+    // 페이지 로딩 시 기존 데이터 불러오기
+    fetchData();
+  </script>
+</html>
