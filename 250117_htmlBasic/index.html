@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TEST PAGE</title>
+  </head>
+  <body>
+    body는 엔터가 무시된다 이런식으로 하지만 <br />
+    엔터가 됩니다.
+    <p id="cat" class="question" style="color: rgba(204, 0, 255, 0.904)">
+      Are you cat person.
+    </p>
+    <p id="dog" class="question" style="color: rgba(255, 136, 0, 0.877)">
+      or dog person
+    </p>
+    <!-- 주석은 ctrl / -->
+    <p>제 통장 잔고는 0원입니다.</p>
+    <h1>헤드라인은 6까지 있어용</h1>
+    <h6>이친구가 6</h6>
+    <span>인라인1</span><span>인라인2</span> <br />
+    <strong>왜 스트롱이 살아남았지?</strong>
+    <ul>
+      <li>곱하기로</li>
+      <li>li를</li>
+      <li>늘릴수있어요</li>
+    </ul>
+    <ol>
+      <li>마찬가지로</li>
+      <li>곱하기로</li>
+      <li>늘릴수있죠</li>
+    </ol>
+    <ol>
+      <li>ol옆에</li>
+      <li>">"</li>
+      <li>후에 li곱하기 하면된당</li>
+      <li>emmet</li>
+    </ol>
+    <a href="out.html">out.html</a><br />
+    <!-- 위는 나를기준 절대경로. 아래는 내작업폴더기준의 상대경로-->
+    <a href="/02_std/out.html">02_std\out.html</a><br />
+    <a href="https://programmers.co.kr">프로그래머스</a><br />
+    <!-- a[href주소]{주소이름} 대괄호로 속성부여 중괄호는 텍스트내용-->
+    <a href=" https://naver.com">네이버</a>
+    <img src="dingo.jpg" alt="이것은 이미지" />
+    <img
+      src="http://127.0.0.1:5500/02_std/dingo.jpg"
+      alt="주소를 활용한 이미지"
+    />
+
+    <table>
+      <tr>
+        <th>이것은 말입니다</th>
+        <th>헤더</th>
+        <th>내용</th>
+      </tr>
+      <tr>
+        <td>이것은</td>
+        <td>데이터의</td>
+        <td>내용</td>
+      </tr>
+      <tr>
+        <td>또</td>
+        <td>다시</td>
+        <td>내용</td>
+      </tr>
+    </table>
+    <form
+      action="https://search.naver.com/search.naver?where=nexearch&query=%EC%9E%90%EB%B0%94"
+      method="get"
+    >
+      <label for="query">press enter key</label>
+      <input
+        type="text"
+        id="query"
+        name="query"
+        placeholder="검색어를 입력하세요"
+      />
+      <input type="hidden" name="where" value="news" />
+    </form>
+  </body>
+</html>

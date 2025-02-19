@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <button onclick="btrclick()">click me!</button>
+    <script>
+      function btrclick() {
+        alert("button is clicked");
+      }
+    </script>
+    <div>
+      <button onclick="increase()">increase</button>
+      <button onclick="decrease()">decrease</button>
+      <button onclick="reset()">reset</button>
+    </div>
+    <style>
+      #container {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 12px;
+        justify-content: center;
+      }
+      #container > div {
+        display: flex;
+        background-color: beige;
+        border-radius: 100%;
+        border: 1px solid black;
+        width: 120px;
+        height: 120px;
+        justify-content: center;
+        align-items: center;
+      }
+    </style>
+    <div id="container"></div>
+    <script>
+      let increaseCounter = 0;
+      function increase() {
+        const container = document.querySelector("#container");
+        console.log(container);
+        const textItem = document.createElement("div");
+        textItem.innerHTML = `lucky number<br>${Math.floor(
+          Math.random() * 44 + 1
+        )}`;
+        const item = document.createElement("div");
+        // id
+        item.id = `item-${increaseCounter}`;
+        textItem.id = `textItem-${increaseCounter++}`;
+        // class
+        item.classList.add("item");
+        textItem.classList.add("textItem");
+        item.appendChild(textItem);
+        container.appendChild(item);
+      }
+
+      function reset() {
+        container.innerHTML = " ";
+        increaseCounter = 0;
+      }
+
+      function decrease() {
+        try {
+          container.removeChild(container.lastElementChild);
+          increaseCounter--;
+        } catch {
+          alert("no items in here");
+        }
+      }
+    </script>
+  </body>
+</html>
